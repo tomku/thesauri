@@ -15,21 +15,21 @@ grep through.  You can use the following Perl command to fix the line endings
 in the Moby thesaurus, but be sure to redirect it unless you like 24mb of text
 dumped into your terminal.
 
-   perl -ple 's/\r?\n|\r/\n/g' mobythes.aur > newfile
+    perl -ple 's/\r?\n|\r/\n/g' mobythes.aur > newfile
 
 The resulting file is happily processed by both GNU grep and Microsoft's
 findstr.exe, and hopefully other grep utilities too.  Any other method that
 converts line endings to Unix should also be sufficient to make it usable.
 
 When you have your thesaurus file processed, store it somewhere safe and point
-g:mobythesaurus_file at like so:
+`g:mobythesaurus_file` at like so:
 
-   let g:mobythesaurus_file = $HOME . "/.vim/mobythesaur-vim.txt"
+    let g:mobythesaurus_file = $HOME . "/.vim/mobythesaur-vim.txt"
 
 It'd probably also be helpful to set `completefunc` to CompleteThesauri so
 that you can actually use the function, like so:
 
-   set completefunc=CompleteThesauri
+    set completefunc=CompleteThesauri
 
 Once everything is set up, you can invoke thesaurus completion via your user
 completion hotkey, Ctrl-x Ctrl-u by default.  This leaves the default thesaurus
