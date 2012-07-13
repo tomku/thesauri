@@ -1,0 +1,94 @@
+thesauri.txt    Moby Thesaurus integration for Vim
+
+==============================================================================
+CONTENTS                                                    *thesauri-contents*
+
+    1. Intro ...................... |thesauri-intro|
+    2. Configuration ...... |thesauri-configuration|
+    2.1 g:mobythesaurus_file .. |mobythesaurus_file|
+    3. Usage ...................... |thesauri-usage|
+    4. File format ............|thesauri-fileformat|
+    5. License .................. |thesauri-license|
+    6. Credits .................. |thesauri-credits|
+
+==============================================================================
+1. Intro                                                       *thesauri-intro*
+
+
+This is a simple plugin that integrates an external thesaurus file into vim's
+user completion function mechanism.  I wrote it because I was unhappy with
+vim's default |'thesaurus'|, which dealt poorly with all of the plain-text 
+thesaurus word lists I could find online.  Starting from the excellent 
+(albeit perhaps overly comprehensive) Moby Project's 
+(http://icon.shef.ac.uk/Moby/) thesaurus, I tried to come up with a way to get 
+it into vim with minimal modifications.
+
+Unfortunately their file uses ancient Mac line endings that make it a pain to
+grep through.  You can use the following Perl command to fix the line endings
+in the Moby thesaurus, but be sure to redirect it unless you like 24mb of text
+dumped into your terminal.
+>
+   perl -ple 's/\r?\n|\r/\n/g' mobythes.aur > newfile
+<
+The resulting file is happily processed by both GNU grep and Microsoft's
+findstr.exe, and hopefully other grep utilities too.  Any other method that
+converts line endings to Unix should also work.
+
+The file format used by the Moby Project is simple, and it should be possible
+to use other thesaurus files as well.  The format that this plugin works with
+is described in |thesauri-fileformat|.
+
+==============================================================================
+2. Configuration                                       *thesauri-configuration*
+
+Setting g:mobythesaurus_file is required for anything at all to work, and
+you'll probably find it useful to set |'completefunc'| as described below
+unless you have another method for invoking a custom completion function. >
+
+  set completefunc=CompleteThesauri
+
+<
+
+------------------------------------------------------------------------------
+2.1 g:mobythesaurus_file                                   *mobythesaurus_file*
+
+The location of your Moby Thesaurus (or compatible) file.
+
+Default: unset
+
+==============================================================================
+3. Usage                                                       *thesauri-usage*
+
+If you've set |'completefunc'| as described above, you can invoke thesaurus
+completion with Ctrl-X Ctrl-U (see |i_CTRL-X_CTRL-U|) in insert mode.
+Otherwise, you're on your own.
+
+==============================================================================
+4. File format                                            *thesauri-fileformat*
+
+This plugin expects a thesaurus file with comma-separated words or phrases
+where the first word on each line is the "entry" and the rest are synonyms.
+In addition, it shells out to 'grep' or 'findstr', which expect appropriate
+line endings for the platform in use.  Here's a simple example:
+
+word1,syn1,syn2,syn3,syn4
+word2,syn5,syn6,syn7
+
+Unlike vim's built-in |'thesaurus'|, thesauri only checks the first entry of
+each line and therefore does not treat the synonym relationship as reflexive.
+In other words, if you want "hot" to suggest "spicy" and vice versa, you need
+o have both "hot" in the entry for "spicy" and "spicy" in the entry for
+"hot".
+
+==============================================================================
+5. License                                                   *thesauri-license*
+
+This plugin is released under the GPLv2 license as described in the included
+LICENSE file, or online at www.gnu.org/licenses/gpl-2.0.html.
+
+==============================================================================
+6. Credits                                                   *thesauri-credits*
+
+I was inspired by vim's built-in thesaurus function, and reused the boilerplate
+code for handling a:findstart from the example in |complete-functions| in the
+vim docs.
