@@ -1,4 +1,4 @@
-thesauri.txt    Moby Thesaurus integration for Vim
+*thesauri.txt*    Moby Thesaurus integration for Vim
 
 ==============================================================================
 CONTENTS                                                    *thesauri-contents*
