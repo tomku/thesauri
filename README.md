@@ -19,7 +19,7 @@ dumped into your terminal.
 
 The resulting file is happily processed by both GNU grep and Microsoft's
 findstr.exe, and hopefully other grep utilities too.  Any other method that
-converts line endings to Unix should also work.
+converts line endings to Unix should also be sufficient to make it usable.
 
 When you have your thesaurus file processed, store it somewhere safe and point
 g:mobythesaurus_file at like so:
